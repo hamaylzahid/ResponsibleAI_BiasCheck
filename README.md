@@ -98,6 +98,71 @@ Fairness in AI is not optional — it’s essential. This repo showcases a princ
 
 > ⚠️ *Ethical Trade-Off*: Mitigation slightly reduces accuracy but enhances fairness significantly.
 
+
+<br><h2 align="center">📌 Key Learnings</h2><br>
+
+- Fairness can **improve drastically** using constraint-based debiasing like Exponentiated Gradient.  
+- Mitigation always involves a **trade-off between accuracy and equity**.  
+- Visual tools like confusion matrices and demographic parity plots help **communicate ethical trade-offs** clearly.  
+- Continuous monitoring and **stakeholder communication** are essential when deploying fair AI models in the real world.<br>
+
+
+### 🧮 MetricFrame Output (Fairlearn)
+
+<br>This section demonstrates how we used Fairlearn's `MetricFrame` to evaluate group-wise fairness (accuracy per gender group):<br>
+
+```python
+from fairlearn.metrics import MetricFrame, accuracy_score
+
+metric_frame = MetricFrame(
+    metrics={"accuracy": accuracy_score},
+    y_true=y_test,
+    y_pred=y_pred,
+    sensitive_features=sens_test
+)
+
+print(metric_frame.by_group)
+```
+
+<details>
+<summary>🖥️ Sample Output</summary>
+
+<pre>
+        accuracy
+sex             
+Female  0.930088
+Male    0.812737
+</pre>
+</details>
+
+
+<br><b> 🎯 Visual Comparison: Fairness & Accuracy<b><br>
+
+<p align="center">
+  <img src="visuals/accuracy&fairness%20before%20&after.png" width="600" alt="Fairness Accuracy Comparison">
+</p>
+
+---
+
+<br><b> 🔳 Confusion Matrices (Before vs After)<b><br>
+
+<p align="center">
+  <img src="visuals/confustion%20matrix%20before&after.png" width="600" alt="Confusion Matrix">
+</p>
+
+> 💡 **Interpretation**:  
+> The confusion matrices above show the distribution of predictions before and after mitigation.  
+> After bias mitigation, the model becomes **more fair** by reducing false positives for the underrepresented group,  
+> even if accuracy slightly drops.
+
+---
+
+<br><b> ⚖️ Fairness vs Bias Trade-off (ε)<b><br>
+
+<p align="center">
+  <img src="visuals/fairness&bias%20trade%20off.png" width="600" alt="Fairness vs Bias Tradeoff">
+</p>
+
 ---
 
 <br><h2 align="center">🔥 Bias Mitigation Strategy</h2><br>
@@ -235,9 +300,19 @@ This project is licensed under the **MIT License** – free to use, modify, and 
   <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation">
     <img src="https://img.shields.io/badge/Repo-Link-blueviolet?style=flat-square&logo=github" alt="Repo" />
   </a>
+  <br>
+  <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/fork">
+    <img src="https://img.shields.io/badge/Fork%20This%20Project-Start%20Building-2ea44f?style=flat-square&logo=github" alt="Fork Project Badge" />
+  </a>
 </p>
+
 
 <p align="center">
   <sub><i>Inspired by fairness. Driven by responsibility. Designed to make a difference.</i></sub>
+</p>
+<p align="center">
+  🔍 <b>Use this project to showcase your commitment to Responsible AI</b>  
+  <br>
+  📦 Clone it, run it, improve it — and advocate for fairness in ML systems.
 </p>
 
