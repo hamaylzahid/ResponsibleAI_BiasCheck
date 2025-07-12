@@ -19,7 +19,23 @@ from fairlearn.reductions import ExponentiatedGradient, DemographicParity
 # -------------------------------------------
 st.set_page_config(page_title="AI Bias Evaluation", layout="centered")
 st.title("🤖 AI Ethics & Bias Evaluation")
-st.markdown("This app detects gender bias in income prediction using the UCI Adult dataset.")
+st.markdown("""
+This interactive app performs **gender bias detection and fairness evaluation** in income prediction using the **UCI Adult Dataset**.
+
+💡 **Key Highlights**:
+- Uses **Logistic Regression** to predict whether an individual's income exceeds \$50K.
+- Evaluates fairness across **sensitive attributes** (gender in this case).
+- Applies **bias mitigation** using `Fairlearn`’s **Exponentiated Gradient algorithm** with a **Demographic Parity constraint**.
+- Shows how **accuracy and fairness trade-offs** occur when deploying AI models in sensitive applications.
+
+📊 Visual and tabular metrics help you understand:
+- How well your model performs overall.
+- Whether it behaves **differently for different genders**.
+- What changes after **fairness constraints are applied**.
+
+This project demonstrates how **responsible AI practices** can help reduce unfair bias in real-world machine learning pipelines.
+""")
+
 
 # -------------------------------------------
 # LOAD DATASET
