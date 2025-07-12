@@ -9,9 +9,6 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.8+-blue?logo=python" alt="Python 3.8+"></a>
   <a href="https://fairlearn.org/"><img src="https://img.shields.io/badge/Fairlearn-Enabled-success?logo=scikit-learn" alt="Fairlearn Enabled"></a>
-  <a href="https://responsibleaibiascheck-h6p9vyyjmsmyemycpsidaz.streamlit.app/">
-    <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="View in Streamlit">
-  </a>
   <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/commits">
     <img src="https://img.shields.io/github/last-commit/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?color=blue" alt="Last Commit">
   </a>
@@ -24,6 +21,22 @@
 
 > **A complete, product**
 
+  ---
+<p align="center">
+  <h3>🎯 Live Demo – Try the App</h3>
+  <em>Experience the full project in action through an interactive Streamlit dashboard.</em><br>
+  This app lets users <b>analyze gender bias</b> in income prediction and <b>visualize fairness metrics</b> interactively.
+ <br> <br>
+  <a href="https://responsibleaibiascheck-h6p9vyyjmsmyemycpsidaz.streamlit.app/">
+    <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="View in Streamlit">
+  </a>
+  <br>  <br>
+  🔗 <b>Live App:</b>   <br>
+  <a href="https://responsibleaibiascheck-h6p9vyyjmsmyemycpsidaz.streamlit.app/" target="_blank">
+    responsibleaibiascheck.streamlit.app
+  </a></p>
+
+---
 
 <br><h2 align="center">📌 Features</h2><br>
 
