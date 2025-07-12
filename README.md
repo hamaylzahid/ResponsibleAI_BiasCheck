@@ -5,6 +5,9 @@
 
 <br><h1 align="center">🚀 AI Ethics and Bias Evaluation – End-to-End Pipeline</h1><br>
 
+This project uses Fairlearn to detect and mitigate bias in a logistic regression classifier trained on the UCI Adult dataset. It showcases demographic parity, ethical trade-offs, and deploys an interactive Streamlit dashboard to explore results in real time.
+
+
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.8+-blue?logo=python" alt="Python 3.8+"></a>
@@ -26,15 +29,20 @@
   <h3>🎯 Live Demo – Try the App</h3>
   <em>Experience the full project in action through an interactive Streamlit dashboard.</em><br>
   This app lets users <b>analyze gender bias</b> in income prediction and <b>visualize fairness metrics</b> interactively.
- <br> <br>
+  <br><br>
   <a href="https://responsibleaibiascheck-h6p9vyyjmsmyemycpsidaz.streamlit.app/">
     <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="View in Streamlit">
   </a>
-  <br>  <br>
-  🔗 <b>Live App:</b>   <br>
+  <br><br>
+  🔗 <b>Live App:</b><br>
   <a href="https://responsibleaibiascheck-h6p9vyyjmsmyemycpsidaz.streamlit.app/" target="_blank">
     responsibleaibiascheck.streamlit.app
-  </a></p>
+  </a>
+  <br><br>
+  ⚙️ <i>Deployment was handled using <code>streamlit run</code> for local development and a <code>requirements.txt</code> file for dependency management. The app is hosted on Streamlit Community Cloud.</i>
+</p>
+
+
 
 ---
 
