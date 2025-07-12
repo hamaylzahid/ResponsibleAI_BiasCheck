@@ -46,7 +46,8 @@ X_train, X_test, y_train, y_test, sens_train, sens_test = train_test_split(
 
 preprocessor = ColumnTransformer(
     transformers=[
-        ('cat', OneHotEncoder(handle_unknown='ignore', sparse=False), categorical_cols),
+        ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), categorical_cols),
+
         ('num', StandardScaler(), numeric_cols)
     ],
     remainder='drop'
