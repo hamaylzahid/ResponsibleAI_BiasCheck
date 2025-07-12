@@ -12,9 +12,10 @@ This project uses Fairlearn to detect and mitigate bias in a logistic regression
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.8+-blue?logo=python" alt="Python 3.8+"></a>
   <a href="https://fairlearn.org/"><img src="https://img.shields.io/badge/Fairlearn-Enabled-success?logo=scikit-learn" alt="Fairlearn Enabled"></a>
+  <a href="https://github.com/hamaylzahid/ResponsibleAI_BiasCheck">
+  <img src="https://img.shields.io/github/repo-size/hamaylzahid/ResponsibleAI_BiasCheck?color=lightgrey" alt="Repo Size"></a>
   <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/commits">
-    <img src="https://img.shields.io/github/last-commit/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?color=blue" alt="Last Commit">
-  </a>
+    <img src="https://img.shields.io/github/last-commit/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?color=blue" alt="Last Commit"> </a>
   <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/stargazers">
     <img src="https://img.shields.io/github/stars/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?style=social" alt="GitHub Stars">
   </a>
