@@ -24,21 +24,6 @@ st.set_page_config(page_title="AI Ethics & Bias Dashboard", layout="wide")
 st.title("🧠 AI Ethics & Bias Detection")
 st.markdown("This app evaluates **gender bias** in income prediction using the UCI Adult Dataset and shows how fairness can be improved using AI mitigation strategies.")
 
-# Load dataset
-@st.cache_data
-def load_data():
-    X, y = fetch_openml("adult", version=2, as_frame=True, return_X_y=True)
-    df = X.copy()
-    df['income'] = y
-    df.replace('?', np.nan, inplace=True)
-    df.dropna(inplace=True)
-    df['income'] = (df['income'] == '>50K').astype(int)
-    sensitive = df['sex'].copy()
-    df.drop('sex', axis=1, inplace=True)
-    return df, sensitive
-
-df, sensitive = load_data()
-st.success(f"✅ Dataset Loaded: {df.shape[0]} samples")
 
 # Split data
 y = df['income'].values
