@@ -9,10 +9,18 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.8+-blue?logo=python" alt="Python 3.8+"></a>
   <a href="https://fairlearn.org/"><img src="https://img.shields.io/badge/Fairlearn-Enabled-success?logo=scikit-learn" alt="Fairlearn Enabled"></a>
-  <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/commits"><img src="https://img.shields.io/github/last-commit/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?color=blue" alt="Last Commit"></a>
-  <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/stargazers"><img src="https://img.shields.io/github/stars/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?style=social" alt="GitHub Stars"></a>
+  <a href="https://responsibleaibiascheck-h6p9vyyjmsmyemycpsidaz.streamlit.app/">
+    <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="View in Streamlit">
+  </a>
+  <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/commits">
+    <img src="https://img.shields.io/github/last-commit/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?color=blue" alt="Last Commit">
+  </a>
+  <a href="https://github.com/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation/stargazers">
+    <img src="https://img.shields.io/github/stars/hamaylzahid/InternIntelligence_AIEthicsandBiasEvaluation?style=social" alt="GitHub Stars">
+  </a>
   <img src="https://img.shields.io/badge/Project%20Status-Completed-brightgreen" alt="Project Status">
 </p>
+
 
 > **A complete, product**
 
