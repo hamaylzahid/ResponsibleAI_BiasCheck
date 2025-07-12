@@ -14,125 +14,117 @@ from sklearn.metrics import accuracy_score
 from fairlearn.metrics import MetricFrame, demographic_parity_difference, demographic_parity_ratio
 from fairlearn.reductions import ExponentiatedGradient, DemographicParity
 
-# ------------------------------
-# TITLE AND PROJECT OVERVIEW
-# ------------------------------
-st.set_page_config(page_title="AI Ethics & Bias Detection", layout="wide")
-st.title("🧠 AI Ethics & Bias Detection")
-st.markdown("""
-This dashboard evaluates **gender bias** in income prediction using the UCI Adult Dataset.
-It compares model performance before and after applying **fairness mitigation techniques**.
-""")
+# -------------------------------------------
+# PAGE CONFIG & TITLE
+# -------------------------------------------
+st.set_page_config(page_title="AI Bias Evaluation", layout="centered")
+st.title("🤖 AI Ethics & Bias Evaluation")
+st.markdown("This app detects gender bias in income prediction using the UCI Adult dataset.")
 
-# ------------------------------
-# DATA + PREPROCESSING
-# ------------------------------
-st.markdown("### 🔄 Loading and Processing Dataset...")
-
+# -------------------------------------------
+# LOAD DATASET
+# -------------------------------------------
 X, y = fetch_openml("adult", version=2, as_frame=True, return_X_y=True)
 df = X.copy()
 df['income'] = y
-df.replace('?', np.nan, inplace=True)
+df.replace("?", np.nan, inplace=True)
 df.dropna(inplace=True)
 df['income'] = (df['income'] == '>50K').astype(int)
 
-sensitive_feature = df['sex'].copy()
-df.drop('sex', axis=1, inplace=True)
+sensitive_feature = df['sex']
+df = df.drop(columns=['sex'])  # exclude from training
 y = df['income'].values
-X = df.drop('income', axis=1)
+X = df.drop(columns=['income'])
 
-categorical_cols = X.select_dtypes(include=['object', 'category']).columns.tolist()
-numeric_cols = X.select_dtypes(include=[np.number, 'bool']).columns.tolist()
+# -------------------------------------------
+# SPLIT & PIPELINE
+# -------------------------------------------
+cat_cols = X.select_dtypes(include=['object']).columns.tolist()
+num_cols = X.select_dtypes(include=[np.number]).columns.tolist()
 
 X_train, X_test, y_train, y_test, sens_train, sens_test = train_test_split(
     X, y, sensitive_feature, test_size=0.3, random_state=42
 )
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ('cat', OneHotEncoder(handle_unknown='ignore', sparse=False), categorical_cols),
-        ('num', StandardScaler(), numeric_cols)
-    ],
-    remainder='drop'
-)
+preprocessor = ColumnTransformer([
+    ("cat", OneHotEncoder(handle_unknown='ignore', sparse_output=False), cat_cols),
+    ("num", StandardScaler(), num_cols)
+])
 
 pipeline = Pipeline([
-    ('preprocessor', preprocessor),
-    ('classifier', LogisticRegression(max_iter=1000))
+    ("preprocessor", preprocessor),
+    ("model", LogisticRegression(max_iter=1000))
 ])
 
 pipeline.fit(X_train, y_train)
 y_pred = pipeline.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
 
-# ------------------------------
-# FAIRNESS METRICS (Before)
-# ------------------------------
-metric_frame = MetricFrame(
-    metrics={"accuracy": accuracy_score},
-    y_true=y_test,
-    y_pred=y_pred,
-    sensitive_features=sens_test
-)
+# -------------------------------------------
+# METRICS (Before Mitigation)
+# -------------------------------------------
+acc_before = accuracy_score(y_test, y_pred)
+dp_diff_before = demographic_parity_difference(y_test, y_pred, sensitive_features=sens_test)
+dp_ratio_before = demographic_parity_ratio(y_test, y_pred, sensitive_features=sens_test)
 
-dp_diff = demographic_parity_difference(y_test, y_pred, sensitive_features=sens_test)
-dp_ratio = demographic_parity_ratio(y_test, y_pred, sensitive_features=sens_test)
+mf = MetricFrame(metrics={"accuracy": accuracy_score}, y_true=y_test, y_pred=y_pred, sensitive_features=sens_test)
 
-# ------------------------------
-# FAIRNESS MITIGATION
-# ------------------------------
-X_train_transformed = pipeline.named_steps['preprocessor'].transform(X_train)
-X_test_transformed = pipeline.named_steps['preprocessor'].transform(X_test)
+# -------------------------------------------
+# APPLY MITIGATION
+# -------------------------------------------
+X_train_tf = pipeline.named_steps['preprocessor'].transform(X_train)
+X_test_tf = pipeline.named_steps['preprocessor'].transform(X_test)
 
 mitigator = ExponentiatedGradient(
     estimator=LogisticRegression(max_iter=1000),
     constraints=DemographicParity(),
     eps=0.01
 )
-mitigator.fit(X_train_transformed, y_train, sensitive_features=sens_train)
-y_pred_mitigated = mitigator.predict(X_test_transformed)
 
-accuracy_mitigated = accuracy_score(y_test, y_pred_mitigated)
-dp_diff_mitigated = demographic_parity_difference(y_test, y_pred_mitigated, sensitive_features=sens_test)
-dp_ratio_mitigated = demographic_parity_ratio(y_test, y_pred_mitigated, sensitive_features=sens_test)
+mitigator.fit(X_train_tf, y_train, sensitive_features=sens_train)
+y_pred_mit = mitigator.predict(X_test_tf)
 
-# ------------------------------
-# 📊 VISUALIZATIONS
-# ------------------------------
+acc_after = accuracy_score(y_test, y_pred_mit)
+dp_diff_after = demographic_parity_difference(y_test, y_pred_mit, sensitive_features=sens_test)
+dp_ratio_after = demographic_parity_ratio(y_test, y_pred_mit, sensitive_features=sens_test)
 
-# 1. Accuracy Comparison
-st.markdown("### ✅ Model Accuracy Comparison")
+# -------------------------------------------
+# VISUALIZATIONS
+# -------------------------------------------
+
+st.markdown("### 🎯 Accuracy Comparison")
 fig1, ax1 = plt.subplots()
-ax1.bar(["Original", "Mitigated"], [accuracy, accuracy_mitigated], color=["skyblue", "orange"])
+ax1.bar(["Before", "After"], [acc_before, acc_after], color=["#007acc", "#f39c12"])
 ax1.set_ylabel("Accuracy")
-ax1.set_ylim(0.6, 1)
+ax1.set_ylim(0.6, 1.0)
 st.pyplot(fig1)
 
-# 2. Demographic Parity Metrics
-st.markdown("### ⚖️ Demographic Parity (Fairness)")
+st.markdown("### ⚖️ Demographic Parity Metrics")
 fig2, ax2 = plt.subplots()
-ax2.bar(["DP Difference", "DP Ratio"], [dp_diff, dp_ratio], color=["crimson", "seagreen"])
+bars = ax2.bar(
+    ["DP Diff (Before)", "DP Diff (After)", "DP Ratio (Before)", "DP Ratio (After)"],
+    [dp_diff_before, dp_diff_after, dp_ratio_before, dp_ratio_after],
+    color=["#e74c3c", "#27ae60", "#e67e22", "#2ecc71"]
+)
+ax2.axhline(0 if max([dp_diff_before, dp_diff_after]) < 1 else 1, linestyle='--', color='gray')
 ax2.set_ylabel("Metric Value")
-ax2.set_title("Original Model Fairness")
+ax2.set_ylim(0, max(dp_ratio_before, dp_ratio_after) + 0.5)
 st.pyplot(fig2)
 
-# 3. By-Group Fairness
-st.markdown("### 👥 Accuracy by Gender Group (Original Model)")
+st.markdown("### 👥 Accuracy by Gender (Before Mitigation)")
 fig3, ax3 = plt.subplots()
-metric_frame.by_group.plot(kind="bar", ax=ax3, color=["purple"])
+mf.by_group.plot(kind='bar', ax=ax3, color='#8e44ad')
 ax3.set_ylabel("Accuracy")
+ax3.set_title("Fairness by Group")
 st.pyplot(fig3)
 
-# ------------------------------
+# -------------------------------------------
 # SUMMARY
-# ------------------------------
-st.markdown("### 📌 Summary & Insights")
+# -------------------------------------------
+st.markdown("### 📝 Summary")
 st.markdown(f"""
-- **Initial Accuracy:** `{accuracy:.3f}`  
-- **Mitigated Accuracy:** `{accuracy_mitigated:.3f}`  
-- **Demographic Parity Difference (Before):** `{dp_diff:.3f}`  
-- **Demographic Parity Ratio (Before):** `{dp_ratio:.3f}`  
-- After applying fairness constraints, the model becomes more balanced, though with a small trade-off in accuracy.
+- **Initial Accuracy:** `{acc_before:.3f}`  
+- **Fair Accuracy (After Mitigation):** `{acc_after:.3f}`  
+- **DP Difference (Before → After):** `{dp_diff_before:.3f} → {dp_diff_after:.3f}`  
+- **DP Ratio (Before → After):** `{dp_ratio_before:.3f} → {dp_ratio_after:.3f}`  
+- **Insight:** After applying bias mitigation, fairness improves with a slight trade-off in accuracy.
 """)
-
-
