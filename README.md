@@ -208,12 +208,15 @@ Male    0.812737
 
 
 # Create virtual environment (optional)
+```
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
 
+```
 # Install requirements
+```
 pip install numpy pandas scikit-learn fairlearn
-
+```
 
 ---
 
